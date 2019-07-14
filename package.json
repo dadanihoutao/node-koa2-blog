@@ -1,0 +1,16 @@
+{
+  "name": "node-koa2-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@47.111.82.156:/home/git/node-koa2-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
