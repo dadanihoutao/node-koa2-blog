@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import './About.sass'
 
 export default class Home extends Component {
   constructor(props) {
@@ -7,7 +8,7 @@ export default class Home extends Component {
   }
   render() {
     return (
-      <div>About页面</div>
+      <div className="about-page">About页面</div>
     )
   }
 }
