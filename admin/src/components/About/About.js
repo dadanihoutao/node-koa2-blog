@@ -7,7 +7,7 @@ export default class Home extends Component {
   }
   render() {
     return (
-      <div>About页面asfdasfdasdf</div>
+      <div>About页面</div>
     )
   }
 }
