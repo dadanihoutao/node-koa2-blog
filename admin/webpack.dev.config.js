@@ -17,7 +17,6 @@ module.exports = merge(commonConfig, {
     // 本地服务
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),// 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录
-        // contentBase: false,
         historyApiFallback: true,// 在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
         compress: true,// 启用gzip压缩
         inline: true,// 设置为true，当源文件改变时会自动刷新页面
