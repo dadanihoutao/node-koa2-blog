@@ -9,48 +9,31 @@ import Router from 'vue-router'
 import { LoadingBar } from 'iview'
 
 Vue.use(Router)
-const files = require.context('@/views', true, /\.vue$/)
-let filenames = files.keys()
-const routesArr = []
-// 各种子页面
-filenames.map((obj, index) => {
-    let path = obj.replace(/^\.\//, '').replace(/\.(vue)$/, '')
-    let arr = path.split('/')
-    let firstName = arr[arr.length - 2]
-    let lastName = arr[arr.length - 1]
-    let fullName = firstName === 'error' || !firstName ? lastName : firstName + lastName.charAt(0).toUpperCase() + lastName.slice(1)
-    if (arr[arr.length - 2] !== 'common') {
-        routesArr.push({
-            path: '/' + path,
-            name: fullName,
-            display: true,
-            component: (resolve) => require([ `@/views/${path}.vue` ], resolve)
-        })
-    }
-})
 
-routesArr.push({
-    path: '/*',
-    display: true,
-    redirect: { name: '404' }
-})
 const routes = [
     {
-        path: '/home',
-        name: 'home',
-        display: true,
-        component: (resolve) => require([ '@/views/common/home.vue' ], resolve),
-        redirect: { name: 'contactsList' },
-        children: routesArr
+        path: '/login',
+        name: 'login',
+        component: (resolve) => require(['@/views/login/login.vue'], resolve)
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: (resolve) => require(['@/views/register/register.vue'], resolve)
     },
     {
         path: '/',
-        display: true,
-        redirect: { name: 'home' }
+        name: 'home',
+        component: (resolve) => require([ '@/views/home/home.vue' ], resolve),
+        children: [
+        ]
     },
     {
         path: '*',
-        display: true,
+        redirect: { name: '404' }
+    },
+    {
+        path: '/*',
         redirect: { name: '404' }
     }
 ]
