@@ -6,6 +6,11 @@
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
+            <FormItem prop="email">
+                <Input type="text" v-model="loginData.email" placeholder="请输入邮箱">
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                </Input>
+            </FormItem>
             <FormItem prop="password">
                 <Input type="password" v-model="loginData.password" placeholder="请输入密码">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
@@ -29,6 +34,7 @@ export default {
         return {
             loginData: {
                 username: '',
+                email: '',
                 password: '',
                 duppassword: ''
             },
@@ -50,9 +56,21 @@ export default {
         handleSubmit (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    this.$Message.success('成功!')
+                    if (this.loginData.password === this.loginData.duppassword) {
+                        delete this.loginData.duppassword
+                        this.$post('/register', this.loginData).then(res => {
+                            console.log(res)
+                            if (res.code === 200) {
+                                this.$Message.success('注册成功')
+                            } else {
+                                this.$Message.success(res.msg)
+                            }
+                        })
+                    } else {
+                        this.$Message.error('两次输入的密码不相同')
+                    }
                 } else {
-                    this.$Message.error('失败!')
+                    this.$Message.error('输入有误')
                 }
             })
         }

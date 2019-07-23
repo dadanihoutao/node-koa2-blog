@@ -8,7 +8,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { Modal, Message } from 'iview'
 
-const HOST = 'https://wm.testapi.qiaolu.com'
+const HOST = 'http://192.168.0.104:3000'
 
 Vue.prototype.$host = HOST
 
