@@ -8,7 +8,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { Modal, Message } from 'iview'
 
-const HOST = 'http://192.168.0.104:3000'
+const HOST = 'http://192.168.0.104:3000/api'
 
 Vue.prototype.$host = HOST
 
@@ -17,6 +17,7 @@ axios.defaults.baseURL = HOST
 
 // http request
 axios.interceptors.request.use((config) => {
+    console.log(config)
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // 请求头参数处理
     config.data = qs.stringify(config.data)

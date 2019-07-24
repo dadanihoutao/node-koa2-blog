@@ -1,8 +1,9 @@
 <template>
     <div class="admin-login">
+        <h3 class="title">时洋的博客</h3>
         <Form class="formInline" ref="formInline" :model="loginData" :rules="ruleInline">
-            <FormItem prop="username">
-                <Input type="text" v-model="loginData.username" placeholder="请输入用户名">
+            <FormItem prop="email">
+                <Input type="text" v-model="loginData.email" placeholder="请输入邮箱">
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
@@ -23,16 +24,16 @@ export default {
     data () {
         return {
             loginData: {
-                username: '',
+                email: '',
                 password: ''
             },
             ruleInline: {
-                username: [
-                    { required: true, message: '请输入用户名', trigger: 'blue' }
+                email: [
+                    { required: true, message: '请输入邮箱', trigger: 'blue' }
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blue' },
-                    { type: 'string', min: 6, message: '密码长度不能小于6位' }
+                    { type: 'string', min: 6, message: '密码长度不能' }
                 ]
             }
         }
@@ -41,7 +42,15 @@ export default {
         handleSubmit (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    this.$Message.success('成功!')
+                    this.$post('/login', this.loginData).then(res => {
+                        if (res.code === 200) {
+                            this.$Message.success('成功!')
+                            console.log(res)
+                            this.$router.push({name: 'home'})
+                        } else {
+                            this.$Message.error(res.msg)
+                        }
+                    })
                 } else {
                     this.$Message.error('失败!')
                 }
@@ -55,6 +64,12 @@ export default {
 .admin-login {
     width: 100%;
     height: 100%;
+    background-color: #ffffff;
+    .title {
+        text-align: center;
+        font-size: 30px;
+        padding-top: 100px;
+    }
     .formInline {
         width: 300px;
         margin: 0 auto;

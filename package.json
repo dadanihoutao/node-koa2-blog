@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "koa-better-body": "^3.0.4",
+    "koa-session": "^5.12.2",
     "koa2-cors": "^2.0.6"
   }
 }

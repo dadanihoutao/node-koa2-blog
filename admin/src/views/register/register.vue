@@ -22,12 +22,13 @@
                 </Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+                <Button type="primary" @click="handleSubmit('formInline')">注册</Button>
             </FormItem>
         </Form>
     </div>
 </template>
 <script>
+import _ from 'lodash'
 export default {
     name: 'register',
     data () {
@@ -57,7 +58,8 @@ export default {
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     if (this.loginData.password === this.loginData.duppassword) {
-                        delete this.loginData.duppassword
+                        let form = _.cloneDeep(this.loginData)
+                        delete form.duppassword
                         this.$post('/register', this.loginData).then(res => {
                             console.log(res)
                             if (res.code === 200) {

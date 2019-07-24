@@ -4,5 +4,7 @@ module.exports = {
     dbHost: 'localhost',
     dbUser: 'root',
     dbPort: 3306,
-    port: 3000 
+    port: 3000,
+
+    ADMIN_PREFIX: '_?:L$"OPUIOSIFJ(*UPT:LKRFG',
 }
