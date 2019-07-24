@@ -22,7 +22,7 @@ const routes = [
         component: (resolve) => require(['@/views/register/register.vue'], resolve)
     },
     {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: (resolve) => require([ '@/views/home/home.vue' ], resolve),
         children: [

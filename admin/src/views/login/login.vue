@@ -46,7 +46,7 @@ export default {
                         if (res.code === 200) {
                             this.$Message.success('成功!')
                             console.log(res)
-                            this.$router.push({name: 'home'})
+                            this.$router.push({path: '/home'})
                         } else {
                             this.$Message.error(res.msg)
                         }
