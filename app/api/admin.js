@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const common = require('../libs/common');
 let router = new Router();
+const addtoken = require('../token/addtoken');
 
 
 router.post('/register', async ctx => {
@@ -34,8 +35,9 @@ router.post('/login', async ctx => {
     if ( result && result instanceof Object && Object.keys(result).length) {
         let pass = common.md5(ctx.config.ADMIN_PREFIX + password);
         if (pass === result.password) {
-            console.log(1111,ctx.session);
+            let token = addtoken({email: email, username: result.nickname}) 
             ctx.body = {
+                token: token,
                 code: 200,
                 data: result,
                 msg: '登录成功'
@@ -58,6 +60,18 @@ router.post('/login', async ctx => {
             msg: '没有此用户'
         }; 
     }
+})
+
+// 测试token 的接口
+router.get('/test', async ctx => {
+    let token = ctx.request.header.authorization
+    console.log(token)
+    ctx.body = {
+        code: 200,
+        data: '测试成功',
+        msg: ''
+    }
+
 })
 
 module.exports = router.routes()

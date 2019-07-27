@@ -5,7 +5,7 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Lockr from 'lockr'
+import Lockr from 'lockr'
 import { LoadingBar } from 'iview'
 
 Vue.use(Router)
@@ -24,6 +24,9 @@ const routes = [
     {
         path: '/home',
         name: 'home',
+        meta: {
+            auth: true
+        },
         component: (resolve) => require([ '@/views/home/home.vue' ], resolve),
         children: [
         ]
@@ -44,7 +47,16 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
     LoadingBar.start()
-    next()
+    // 限制如果没有token 就跳转登录页面
+    if (to.meta.auth) {
+        if (Lockr.get('token')) {
+            next()
+        } else {
+            next({path: '/login'})
+        }
+    } else {
+        next()
+    }
 })
 
 router.afterEach((to, from) => {

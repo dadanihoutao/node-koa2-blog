@@ -44,7 +44,8 @@ export default {
                 if (valid) {
                     this.$post('/login', this.loginData).then(res => {
                         if (res.code === 200) {
-                            this.$Message.success('成功!')
+                            this.$Message.success('登录成功!')
+                            this.$Lockr.set('token', res.token)
                             console.log(res)
                             this.$router.push({path: '/home'})
                         } else {

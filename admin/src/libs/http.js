@@ -7,6 +7,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 import { Modal, Message } from 'iview'
+import Lockr from 'lockr'
 
 const HOST = 'http://192.168.0.104:3000/api'
 
@@ -20,6 +21,9 @@ axios.interceptors.request.use((config) => {
     console.log(config)
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // 请求头参数处理
+    if (!config.url.includes('login') && !config.url.includes('register')) {
+        config.headers['Authorization'] = 'Bearer ' + Lockr.get('token')
+    }
     config.data = qs.stringify(config.data)
     return config
 }, (error) => {
@@ -29,10 +33,11 @@ axios.interceptors.request.use((config) => {
 // http response
 axios.interceptors.response.use((res) => {
     if (res.status && res.status === 200) {
-        /* if (res.data.code === 101) {
-        Message.error('未登录，或登录失效，请登录')
-        window.location.href = window.location.pathname + '/login'
-        } */
+        if (res.data.code === 101) {
+            Message.error('未登录，或登录失效，请登录')
+            Lockr.flush()
+            window.location.href = window.location.origin + '/#/login'
+        }
     }
     return res
 }, (error) => {
