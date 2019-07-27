@@ -42,7 +42,7 @@ export default {
         handleSubmit (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    this.$post('/login', this.loginData).then(res => {
+                    this.$post('/api/login', this.loginData).then(res => {
                         if (res.code === 200) {
                             this.$Message.success('登录成功!')
                             this.$Lockr.set('token', res.token)

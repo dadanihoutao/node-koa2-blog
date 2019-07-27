@@ -9,12 +9,12 @@ import qs from 'qs'
 import { Modal, Message } from 'iview'
 import Lockr from 'lockr'
 
-const HOST = 'http://192.168.0.104:3000/api'
+const HOST = 'http://192.168.0.104:3001/api'
 
 Vue.prototype.$host = HOST
 
 axios.defaults.timeout = 5000
-axios.defaults.baseURL = HOST
+// axios.defaults.baseURL = HOST
 
 // http request
 axios.interceptors.request.use((config) => {

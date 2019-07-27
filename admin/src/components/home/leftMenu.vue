@@ -17,7 +17,7 @@ export default {
             console.log(this.$router.options.routes)
         },
         test () {
-            this.$get('/test').then(res => {
+            this.$get('/api/test').then(res => {
                 console.log(res)
                 if (res.code === 200) {
                     console.log(formatDate(res.data.exp * 1000))
