@@ -36,15 +36,12 @@ router.use(async (ctx, next) => {
     console.log(ctx.request.url)
     // 登录注册直接通过
     if (ctx.request.url.includes('login') || ctx.request.url.includes('register')) {
-        console.log(1111)
         await next()
     } else {
         // 其他接口检测有没有携带token
         let token = ctx.request.header.authorization
-        console.log(token)
         if (token) {
             let res = proving(token)
-            console.log(3333,res.exp, (new Date() / 1000));
             if (res && res.exp <= (new Date() / 1000)){
                 ctx.body = {
                     code: 101,

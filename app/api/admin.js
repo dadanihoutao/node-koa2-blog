@@ -1,8 +1,9 @@
 const Router = require('koa-router');
 const common = require('../libs/common');
 let router = new Router();
+// 添加token 用的
+// https://www.jianshu.com/p/406301bead0c
 const addtoken = require('../token/addtoken');
-
 
 router.post('/register', async ctx => {
     let { username, password, email } = ctx.request.fields;
@@ -11,12 +12,12 @@ router.post('/register', async ctx => {
     
     let vals = Object.values(ctx.request.fields);
     let data = await ctx.db.query(`SELECT * FROM admin`);
-    let isTrue = data.findIndex(item => item.nickname === username)
+    let isTrue = data.findIndex(item => item.email === email)
     if (isTrue !== -1) {
         ctx.body = {
             code: 201,
             data: '',
-            msg: '用户名以占用'
+            msg: '此邮箱已被注册'
         }
     } else {
         await ctx.db.query(`INSERT INTO admin (nickname, email, password) VALUES(?,?,?)`, vals)
