@@ -12,7 +12,7 @@ import Lockr from 'lockr'
 const HOST = 'http://192.168.0.104:3001/api'
 
 console.log(process.env.NODE_ENV)
-
+alert(process.env.NODE_ENV)
 Vue.prototype.$host = HOST
 
 axios.defaults.timeout = 5000
