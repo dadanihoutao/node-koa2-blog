@@ -66,7 +66,6 @@ router.post('/login', async ctx => {
 // 测试token 的接口
 router.get('/test', async ctx => {
     let token = ctx.request.header.authorization
-    console.log(token)
     ctx.body = {
         code: 200,
         data: process.env.NODE_ENV,

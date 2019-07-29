@@ -1,4 +1,5 @@
 // ecosystem.config.js
+// pm2 线上环境的环境变量配置文件，回头有时间了要学习一下pm2 
 module.exports = {
 	apps: [
 		{
