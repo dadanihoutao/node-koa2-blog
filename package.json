@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "supervisor app.js"
+    "dev": "export NODE_ENV='development' && supervisor app.js",
+    "build": "export NODE_ENV='production' && pm2 start app.js"
   },
   "repository": {
     "type": "git",
