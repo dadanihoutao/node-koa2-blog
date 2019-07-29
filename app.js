@@ -34,6 +34,7 @@ let router = new Router();
 // 统一处理token
 router.use(async (ctx, next) => {
     console.log(ctx.request.url)
+    console.log(11111,process.env.NODE_ENV)
     // 登录注册直接通过
     if (ctx.request.url.includes('login') || ctx.request.url.includes('register')) {
         await next()
