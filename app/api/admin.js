@@ -69,7 +69,7 @@ router.get('/test', async ctx => {
     console.log(token)
     ctx.body = {
         code: 200,
-        data: '测试成功',
+        data: process.env.NODE_ENV,
         msg: ''
     }
 
