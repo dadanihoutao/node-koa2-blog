@@ -12,6 +12,10 @@ Vue.use(Router)
 
 const routes = [
     {
+        path: '/',
+        redirect: '/login'
+    },
+    {
         path: '/login',
         name: 'login',
         component: (resolve) => require(['@/views/login/login.vue'], resolve)
