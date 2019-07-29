@@ -35,6 +35,10 @@ let router = new Router();
 router.use(async (ctx, next) => {
     console.log(ctx.request.url)
     console.log(11111,process.env.NODE_ENV)
+    ctx.body = {
+        data: process.env.NODE_ENV
+    }
+    return
     // 登录注册直接通过
     if (ctx.request.url.includes('login') || ctx.request.url.includes('register')) {
         await next()
