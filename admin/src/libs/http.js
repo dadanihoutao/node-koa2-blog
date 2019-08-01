@@ -11,8 +11,6 @@ import Lockr from 'lockr'
 
 const HOST = 'http://192.168.0.104:3001/api'
 
-console.log(process.env.NODE_ENV)
-// alert(process.env.NODE_ENV)
 Vue.prototype.$host = HOST
 
 axios.defaults.timeout = 5000
@@ -20,7 +18,6 @@ axios.defaults.timeout = 5000
 
 // http request
 axios.interceptors.request.use((config) => {
-    console.log(config)
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // 请求头参数处理
     if (!config.url.includes('login') && !config.url.includes('register')) {
