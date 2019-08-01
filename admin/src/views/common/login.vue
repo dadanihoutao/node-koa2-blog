@@ -1,7 +1,7 @@
 <template>
     <div class="admin-login">
         <h3 class="title">时洋的博客</h3>
-        <Form class="formInline" ref="formInline" :model="loginData" :rules="ruleInline">
+        <Form class="formInline" ref="formInline" :model="loginData" :rules="ruleInline" >
             <FormItem prop="email">
                 <Input type="text" v-model="loginData.email" placeholder="请输入邮箱">
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
