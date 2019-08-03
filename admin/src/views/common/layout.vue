@@ -1,21 +1,21 @@
 <template>
     <div class="home">
-        <leftMenu ref="leftMenu" @emitData="getActiveMenu">
+        <leftMenu ref="leftMenu">
         </leftMenu>
         <section class="content">
-            <div class="fix-header">
+            <div class="fix-header" ref="fixHeader">
                 <div class="left-box">
                     <!-- <Icon class="icon-font" type="md-menu" /> -->
                 </div>
                 <div class="right-box">
-                    <span>851051279@qq.com</span>
+                    <span>欢迎， {{ userInfo.email }}</span>
                     <Button type="text" @click="logOut">退出</Button>
                 </div>
             </div>
-            <div class="content-wrap">
+            <div class="content-wrap" :style="{'height': mainHeight + 'px'}">
                 <router-view />
             </div>
-            <footer class="home-footer">
+            <footer class="home-footer" ref="homeFooter">
                 <p>2019 © lokiblog.com</p>
             </footer>
         </section>
@@ -23,6 +23,7 @@
 </template>
 <script>
 import leftMenu from '@/components/home/leftMenu'
+import { mapActions, mapState } from 'vuex'
 export default {
     name: 'home',
     components: {
@@ -30,15 +31,41 @@ export default {
     },
     data () {
         return {
+            clientHeight: null,
+            clientWidth: null,
+            userInfo: {}
+        }
+    },
+    computed: {
+        ...mapState([
+            'mainHeight'
+        ])
+    },
+    watch: {
+        '$route': {
+            handler (nVal, oVal) {
+                this.measure()
+            },
+            deep: true
         }
     },
     created () {
-        this.initData()
+        this.getUserInfo()
+    },
+    mounted () {
+        this.measure()
+        window.addEventListener('resize', () => {
+            this.measure()
+        }, false)
     },
     methods: {
-        getActiveMenu (data) {
-        },
-        initData () {
+        ...mapActions([
+            'setMainHeight',
+            'setClientHeight',
+            'setClientWidth'
+        ]),
+        getUserInfo () {
+            this.userInfo = this.$Lockr.get('userinfo')
         },
         logOut () {
             this.$Lockr.rm('token')
@@ -46,7 +73,20 @@ export default {
             this.$router.push({
                 path: '/login'
             })
+        },
+        measure () {
+            this.$nextTick(() => {
+                this.clientHeight = document.documentElement.clientHeight
+                this.clientWidth = document.documentElement.clientWidth
+                let mainHeight = this.clientHeight - this.$refs.fixHeader.clientHeight - this.$refs.homeFooter.clientHeight
+                this.setMainHeight(mainHeight)
+                this.setClientHeight(this.clientHeight)
+                this.setClientWidth(this.clientWidth)
+            })
         }
+    },
+    beforeDestroy () {
+        window.removeEventListener('resize', this.measure(), false)
     }
 }
 </script>
@@ -98,7 +138,7 @@ export default {
             margin-left: 0;
         }
         .content-wrap {
-            margin-top: 5px;
+            margin: 10px 10px 0 10px;
         }
     }
 }

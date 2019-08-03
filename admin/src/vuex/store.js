@@ -12,10 +12,9 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-    screenHeight: null,
+    clientHeight: null,
     mainHeight: null,
-    tableHeight: null,
-    activeMenuName: ''
+    clientWidth: null
 }
 
 export default new Vuex.Store({

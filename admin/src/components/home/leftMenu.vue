@@ -60,6 +60,7 @@ export default {
             })
         },
         goLink (data) {
+            console.log(data)
             this.$router.push({
                 path: data
             })

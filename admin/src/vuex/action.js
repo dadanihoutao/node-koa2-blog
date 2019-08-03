@@ -4,16 +4,13 @@
  * @Last Modified time: 2019-07-19 16:58:36
  */
 export default {
-    setTableHeight ({ commit, state }, val) {
-        state.tableHeight = val - 3
+    setClientWidth ({ commit, state }, val) {
+        state.clientWidth = val - 3
     },
     setMainHeight ({ commit, state }, val) {
-        state.mainHeight = val - 3
+        state.mainHeight = val - 10
     },
-    setScreenHeight ({ commit, state }, val) {
-        state.screenHeight = val - 3
-    },
-    setActiveMenuName ({ commit, state }, val) {
-        state.activeMenuName = val
+    setClientHeight ({ commit, state }, val) {
+        state.clientHeight = val - 3
     }
 }

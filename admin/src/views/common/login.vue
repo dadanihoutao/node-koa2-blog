@@ -46,6 +46,7 @@ export default {
                         if (res.code === 200) {
                             this.$Message.success('登录成功!')
                             this.$Lockr.set('token', res.token)
+                            this.$Lockr.set('userinfo', res.data)
                             this.$router.push({path: '/home'})
                         } else {
                             this.$Message.error(res.msg)
