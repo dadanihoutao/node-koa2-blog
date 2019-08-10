@@ -1,0 +1,32 @@
+.font-gray {
+  color: #9EA7B4;
+}
+// 宽度 从10px到800px 相隔10像素
+.generate-widths(800);
+.generate-widths(@n, @i: 10) when (@i =< @n) {
+  .width@{i} {
+    width: 0px + @i;
+  }
+  .generate-widths(@n, (@i+10));
+}
+// margin-right 从5px到100px 相隔5像素
+.generate-marginR(100);
+.generate-marginR(@n, @i: 5) when (@i =< @n) {
+  .marginR@{i} {
+    margin-right: 0px + @i;
+  }
+  .generate-marginR(@n, (@i+5));
+}
+
+.table-page-wrapper {
+  padding: 0 30px;
+  background-color: #fff;
+  .page-wrapper {
+    height: 62px;
+    text-align: right;
+    border-top: 1px solid #DDD;
+    .ivu-page {
+      padding-top: 15px;
+    }
+  }
+}

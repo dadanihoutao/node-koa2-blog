@@ -9,7 +9,6 @@ router.post('/register', async ctx => {
     let { username, password, email } = ctx.request.fields;
     // 密码加密
     ctx.request.fields.password = common.md5(ctx.config.ADMIN_PREFIX + password)
-    
     let vals = Object.values(ctx.request.fields);
     let data = await ctx.db.query(`SELECT * FROM admin`);
     let isTrue = data.findIndex(item => item.email === email)
@@ -43,10 +42,6 @@ router.post('/login', async ctx => {
                 data: result,
                 msg: '登录成功'
             };
-            // ctx.cookies.set('user', 'blue', {
-            //     maxAge: 14*86400*1000,
-            //     signed: true
-            // });
         } else {
             ctx.body = {
                 code: 201,
@@ -63,7 +58,7 @@ router.post('/login', async ctx => {
     }
 })
 
-// 测试token 的接口
+// 测试token 的接口 用来查看环境变量
 router.get('/test', async ctx => {
     let token = ctx.request.header.authorization
     ctx.body = {

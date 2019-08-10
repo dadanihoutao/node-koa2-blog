@@ -10,6 +10,7 @@ const devConfig = {
     dbHost: 'localhost',
     dbUser: 'root',
     dbPort: 3306,
+    host: 'http://localhost'
 }
 // 线上环境数据库配置
 const protConfig = {
@@ -18,6 +19,7 @@ const protConfig = {
     dbHost: '127.0.0.1',
     dbUser: 'test',
     dbPort: 3306,
+    host: 'http://lokiblog.com'
 }
 
 let config = {}

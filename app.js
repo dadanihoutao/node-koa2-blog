@@ -3,8 +3,10 @@ const Router = require('koa-router');
 const config = require('./config/config');
 const db = require('./config/database');
 const body = require('koa-better-body');
+const static = require('koa-static');
 const cors = require('koa2-cors');
 const proving = require('./app/token/proving');
+const path = require('path');
 
 let server = new Koa()
 server.listen(config.port)
@@ -12,8 +14,13 @@ server.listen(config.port)
 // 中间件
 // koa-better-body https://www.jianshu.com/p/694b413ac2a3
 server.use(body({
-    uploadDir: '/upload'
+    // uploadDir: './static/upload'
+    uploadDir: path.resolve(__dirname, './static/upload')
 }))
+
+// 静态文件托管，上传的图片可以通过路径访问
+server.use(static(path.resolve(__dirname, './static/')))
+
 // 解决跨域
 server.use(cors({
     origin: function (ctx) {
@@ -45,7 +52,8 @@ router.use(async (ctx, next) => {
                 ctx.body = {
                     code: 101,
                     data: '',
-                    msg: 'token过期'
+                    // msg: 'token过期'
+                    msg: '登录过期，请重新登录'
                 }
             } else {
                 await next()
@@ -54,14 +62,22 @@ router.use(async (ctx, next) => {
             ctx.body = {
                 code: 101,
                 data: '',
-                msg: '没有token'
+                // msg: '没有token'
+                msg: '请登录'
             }
         }
     }
 })
 
-
-router.use('/api', require('./app/api/admin'));
-
+// 登录注册接口
+router.use('/api/admin', require('./app/api/admin'));
+// 分类接口
+router.use('/api/category', require('./app/api/category'));
+// 文章接口
+router.use('/api/article', require('./app/api/article'));
+// 图片上传
+router.use('/api/upload', require('./app/api/upload'));
+// 评论
+router.use('/api/comments', require('./app/api/comments'));
 
 server.use(router.routes());
