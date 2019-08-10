@@ -1,16 +1,7 @@
 <template>
     <div class="home">
-        <leftMenu ref="leftMenu">
-        </leftMenu>
         <section class="content">
             <div class="fix-header" ref="fixHeader">
-                <div class="left-box">
-                    <!-- <Icon class="icon-font" type="md-menu" /> -->
-                </div>
-                <div class="right-box">
-                    <span>欢迎， {{ userInfo.email }}</span>
-                    <Button type="text" @click="logOut">退出</Button>
-                </div>
             </div>
             <div class="content-wrap" :style="{'height': mainHeight + 'px'}">
                 <router-view />
@@ -22,12 +13,10 @@
     </div>
 </template>
 <script>
-import leftMenu from '@/components/home/leftMenu'
 import { mapActions, mapState } from 'vuex'
 export default {
     name: 'home',
     components: {
-        leftMenu
     },
     data () {
         return {
@@ -50,7 +39,6 @@ export default {
         }
     },
     created () {
-        this.getUserInfo()
     },
     mounted () {
         this.measure()
@@ -64,16 +52,6 @@ export default {
             'setClientHeight',
             'setClientWidth'
         ]),
-        getUserInfo () {
-            this.userInfo = this.$Lockr.get('userinfo')
-        },
-        logOut () {
-            this.$Lockr.rm('token')
-            this.$Message.success('登出成功')
-            this.$router.push({
-                path: '/login'
-            })
-        },
         measure () {
             this.$nextTick(() => {
                 this.clientHeight = document.documentElement.clientHeight
@@ -98,7 +76,7 @@ export default {
     display: flex;
     .content {
         position: relative;
-        width: calc(100% - 240px);
+        width: 100%;
         height: 100%;
         background-color: #f5f7f9;
         .fix-header {
@@ -108,19 +86,6 @@ export default {
             justify-content: space-between;
             align-items: center;
             background-color: #ffffff;
-            .left-box {
-                .icon-font {
-                    font-size: 26px;
-                    margin-left: 20px;
-                }
-            }
-            .right-box {
-                span {
-                    color: #2d8cf0;
-                    font-size: 14px;
-                    margin-right: 20px;
-                }
-            }
         }
         .home-footer {
             width: 100%;
