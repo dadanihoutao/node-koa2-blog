@@ -37,7 +37,6 @@ server.context.db = db;
 server.context.config = config;
 
 let router = new Router();
-
 // 统一处理token
 router.use(async (ctx, next) => {
     // 登录注册直接通过
@@ -46,7 +45,8 @@ router.use(async (ctx, next) => {
     } else {
         // 其他接口检测有没有携带token
         let token = ctx.request.header.authorization
-        if (token) {
+        if (token.split(' ')[1]) {
+        // if (token.split(' ')[1] !== 'undefined') {
             let res = proving(token)
             if (res && res.exp <= (new Date() / 1000)){
                 ctx.body = {
@@ -68,7 +68,7 @@ router.use(async (ctx, next) => {
         }
     }
 })
-
+// 后台接口 ============================================= 
 // 登录注册接口
 router.use('/api/admin', require('./app/api/admin'));
 // 分类接口
@@ -79,5 +79,7 @@ router.use('/api/article', require('./app/api/article'));
 router.use('/api/upload', require('./app/api/upload'));
 // 评论
 router.use('/api/comments', require('./app/api/comments'));
+
+// 前台接口 ==============================================
 
 server.use(router.routes());

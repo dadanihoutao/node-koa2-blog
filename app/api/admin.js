@@ -35,7 +35,8 @@ router.post('/login', async ctx => {
     if ( result && result instanceof Object && Object.keys(result).length) {
         let pass = common.md5(ctx.config.ADMIN_PREFIX + password);
         if (pass === result.password) {
-            let token = addtoken({email: email, username: result.nickname}) 
+            let token = addtoken({email: email, username: result.nickname})
+            // ctx.config.token = token
             ctx.body = {
                 token: token,
                 code: 200,

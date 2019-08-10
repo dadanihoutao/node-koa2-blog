@@ -72,66 +72,6 @@ const routes = [
         component: (resolve) => require([ '@/views/common/layout.vue' ], resolve),
         redirect: { name: 'home' },
         children: routesArr
-        // children: [
-        //     {
-        //         path: '/home',
-        //         name: 'home',
-        //         meta: { auth: true, title: '首页' },
-        //         component: (resolve) => require([ '@/views/home/home.vue' ], resolve)
-        //     },
-        //     // 管理员 todo
-        //     {
-        //         path: '/admin',
-        //         name: 'admin',
-        //         meta: { auth: true, title: '管理员 - 列表' },
-        //         component: (resolve) => require([ '@/views/admin/admin.vue' ], resolve)
-        //     },
-        //     // 分类管理
-        //     {
-        //         path: '/category',
-        //         name: 'category',
-        //         meta: { auth: true, title: '分类 - 列表' },
-        //         component: (resolve) => require([ '@/views/category/list.vue' ], resolve)
-        //     },
-        //     {
-        //         path: '/category/create',
-        //         name: 'category/create',
-        //         meta: { auth: true, title: '分类 - 创建' },
-        //         component: (resolve) => require([ '@/views/category/create.vue' ], resolve)
-        //     },
-        //     {
-        //         path: '/category/update/:id',
-        //         name: 'category/update',
-        //         meta: { auth: true, title: '分类 - 更新' },
-        //         component: (resolve) => require([ '@/views/category/update.vue' ], resolve)
-        //     },
-        //     // 文章管理
-        //     {
-        //         path: '/article',
-        //         name: 'article',
-        //         meta: { auth: true, title: '文章 - 列表' },
-        //         component: (resolve) => require([ '@/views/article/list.vue' ], resolve)
-        //     },
-        //     {
-        //         path: '/article/create',
-        //         name: 'article/create',
-        //         meta: { auth: true, title: '文章 - 创建' },
-        //         component: (resolve) => require([ '@/views/article/create.vue' ], resolve)
-        //     },
-        //     {
-        //         path: '/article/update',
-        //         name: 'article/update',
-        //         meta: { auth: true, title: '文章 - 更新' },
-        //         component: (resolve) => require([ '@/views/article/update.vue' ], resolve)
-        //     },
-        //     // 评论管理
-        //     {
-        //         path: '/comments',
-        //         name: 'comments',
-        //         meta: { auth: true, title: '评论 - 列表' },
-        //         component: (resolve) => require([ '@/views/comments/list.vue' ], resolve)
-        //     }
-        // ]
     },
     {
         path: '*',
@@ -144,7 +84,6 @@ const routes = [
 ]
 const router = new Router({
     // mode: 'history',
-    // base: '/vuep/',
     routes: routes
 })
 router.beforeEach((to, from, next) => {
