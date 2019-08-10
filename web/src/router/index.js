@@ -33,16 +33,6 @@ const routes = [
                 path: '/about',
                 name: 'about',
                 component: (resolve) => require([ '@/views/about/index.vue' ], resolve)
-            },
-            {
-                path: '/*',
-                display: true,
-                redirect: {name: '404'}
-            },
-            {
-                path: '/error/404',
-                name: '404',
-                component: (resolve) => require([ '@/views/error/404.vue' ], resolve)
             }
         ]
     },
@@ -53,6 +43,11 @@ const routes = [
     {
         path: '/*',
         redirect: { name: '404' }
+    },
+    {
+        path: '/error/404',
+        name: '404',
+        component: (resolve) => require([ '@/views/error/404.vue' ], resolve)
     }
 ]
 const router = new Router({
