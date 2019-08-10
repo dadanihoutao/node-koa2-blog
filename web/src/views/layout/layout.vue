@@ -1,22 +1,18 @@
 <template>
-    <div class="home">
-        <section class="content">
-            <div class="fix-header" ref="fixHeader">
-            </div>
-            <div class="content-wrap" :style="{'height': mainHeight + 'px'}">
-                <router-view />
-            </div>
-            <footer class="home-footer" ref="homeFooter">
-                <p>2019 © lokiblog.com</p>
-            </footer>
-        </section>
-    </div>
+    <section class="content">
+        <home-header></home-header>
+        <router-view />
+        <home-footer></home-footer>
+    </section>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
+import homeHeader from '@/components/common/homeHeader.vue'
+import homeFooter from '@/components/common/homeFooter.vue'
 export default {
     name: 'home',
     components: {
+        homeHeader, homeFooter
     },
     data () {
         return {
@@ -26,9 +22,6 @@ export default {
         }
     },
     computed: {
-        ...mapState([
-            'mainHeight'
-        ])
     },
     watch: {
         '$route': {
@@ -48,7 +41,6 @@ export default {
     },
     methods: {
         ...mapActions([
-            'setMainHeight',
             'setClientHeight',
             'setClientWidth'
         ]),
@@ -56,8 +48,6 @@ export default {
             this.$nextTick(() => {
                 this.clientHeight = document.documentElement.clientHeight
                 this.clientWidth = document.documentElement.clientWidth
-                let mainHeight = this.clientHeight - this.$refs.fixHeader.clientHeight - this.$refs.homeFooter.clientHeight
-                this.setMainHeight(mainHeight)
                 this.setClientHeight(this.clientHeight)
                 this.setClientWidth(this.clientWidth)
             })
@@ -69,42 +59,9 @@ export default {
 }
 </script>
 <style lang="less">
-.home {
-    position: absolute;
+.content {
+    position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
-    .content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background-color: #f5f7f9;
-        .fix-header {
-            height: 50px;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #ffffff;
-        }
-        .home-footer {
-            width: 100%;
-            height: 40px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            line-height: 40px;
-            color: #9ea7b4;
-        }
-        &.spread {
-            width: 100%;
-            margin-left: 0;
-        }
-        .content-wrap {
-            margin: 10px 10px 0 10px;
-        }
-    }
 }
 </style>
