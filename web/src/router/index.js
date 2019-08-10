@@ -15,20 +15,23 @@ const routes = [
     {
         path: '/',
         component: (resolve) => require([ '@/views/layout/layout.vue' ], resolve),
-        redirect: '/article',
+        redirect: { name: 'article' },
         children: [
             {
                 path: '/article',
+                name: 'article',
                 component: (resolve) => require([ '@/views/article/list.vue' ], resolve)
             },
             // 文章详情
             {
                 path: '/detail/:id',
+                name: 'detail',
                 component: (resolve) => require([ '@/views/article/detail.vue' ], resolve)
             },
             // 关于
             {
                 path: '/about',
+                name: 'about',
                 component: (resolve) => require([ '@/views/about/index.vue' ], resolve)
             },
             {
