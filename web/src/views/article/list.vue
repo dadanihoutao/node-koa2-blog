@@ -7,7 +7,7 @@
             </div>
             <div class="list-main">
                 <ul class="artical-list">
-                    <li class="clearfix" v-for="item in 10" :key="item">
+                    <li class="clearfix" v-for="item in 10" :key="item" @click="jumpDetail(item)">
                         <div class="left-box">
                             <h1>测试的大师傅阿斯蒂芬</h1>
                             <div class="labels">
@@ -94,6 +94,13 @@ export default {
                 } else {
                     this.$Message.error(res.msg)
                 }
+            })
+        },
+        jumpDetail (val) {
+            console.log(val)
+            this.$router.push({
+                path: '/detail',
+                query: {id: val}
             })
         }
     }

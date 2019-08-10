@@ -3,8 +3,8 @@
         <div class="center-wrap">
             <div class="logo">blog</div>
             <div class="btns">
-                <Button type="text" class="active"><Icon class="icons" type="md-book" />文章</Button>
-                <Button type="text"><Icon class="icons" type="ios-chatbubbles-outline" />关于</Button>
+                <Button @click="jumpPage('/article')" type="text" class="active"><Icon class="icons" type="md-book" />文章</Button>
+                <Button @click="jumpPage('/about')"  type="text"><Icon class="icons" type="ios-chatbubbles-outline" />关于</Button>
             </div>
             <div class="search-input">
                 <Input v-model="searchVal" placeholder="请输入搜索内容">
@@ -23,7 +23,11 @@ export default {
         }
     },
     created () {},
-    methods: {}
+    methods: {
+        jumpPage (path) {
+            this.$router.push({path: path})
+        }
+    }
 }
 </script>
 <style lang="less">

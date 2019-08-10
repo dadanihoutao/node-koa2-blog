@@ -24,7 +24,7 @@ const routes = [
             },
             // 文章详情
             {
-                path: '/detail/:id',
+                path: '/detail',
                 name: 'detail',
                 component: (resolve) => require([ '@/views/article/detail.vue' ], resolve)
             },
