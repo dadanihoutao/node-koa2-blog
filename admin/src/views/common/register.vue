@@ -61,7 +61,6 @@ export default {
                         let form = _.cloneDeep(this.loginData)
                         delete form.duppassword
                         this.$post('/api/admin/register', this.loginData).then(res => {
-                            console.log(res)
                             if (res.code === 200) {
                                 this.$Message.success('注册成功')
                             } else {
