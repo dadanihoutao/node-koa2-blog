@@ -10,6 +10,7 @@ const devConfig = {
     dbHost: 'localhost',
     dbUser: 'root',
     dbPort: 3306,
+    timezone: '08:00',  // 处理使用node查询数据库（mysql）时，日期格式不对的问题
     host: 'http://localhost'
 }
 // 线上环境数据库配置
@@ -19,6 +20,7 @@ const protConfig = {
     dbHost: '127.0.0.1',
     dbUser: 'test',
     dbPort: 3306,
+    timezone: '08:00',
     host: 'http://lokiblog.com'
 }
 

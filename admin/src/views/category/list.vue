@@ -31,7 +31,7 @@ export default {
                 },
                 {
                     title: '分类下的文章',
-                    key: 'num'
+                    key: 'category_sum'
                 },
                 {
                     title: '操作',

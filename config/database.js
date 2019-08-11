@@ -6,6 +6,7 @@ let conn = mysql.createPool({
     host: config.dbHost,
     user: config.dbUser,
     password: config.dbPass,
-    database: config.dbName
+    database: config.dbName,
+    timezone: config.timezone
 })
 module.exports = co(conn)

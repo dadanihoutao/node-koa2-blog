@@ -38,7 +38,7 @@ export default {
                 },
                 {
                     title: '评论次数',
-                    key: 'key',
+                    key: 'comments_sum',
                     width: 100
                 },
                 {
@@ -82,6 +82,7 @@ export default {
                 }
             })
         },
+
         addArticle () {
             this.$router.push({
                 path: '/article/create'

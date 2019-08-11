@@ -4,10 +4,38 @@ let router = new Router()
 
 // 文章列表
 router.get('/list', async ctx => {
-    let { page, pageSize } = ctx.request.query
-    // let data = await ctx.db.query(`SELECT * FROM article ORDER BY created_at ASC LIMIT ${(page-1)*pageSize}, ${pageSize}`);
-    let data = await ctx.db.query(`SELECT * FROM article ORDER BY created_at DESC LIMIT ${(page-1)*pageSize}, ${pageSize}`);
-    let total = await ctx.db.query(`SELECT COUNT(id) as total FROM article`)
+    let { page, pageSize, order, categoryId} = ctx.request.query
+    let type = +order ? 'comments_sum' : 'a.created_at'
+    let categoryQuery = categoryId ? `WHERE a.category_id = ${+categoryId}` : ''
+    let data = []
+    let total = ''
+    if (!categoryId) {
+        total = await ctx.db.query(`SELECT COUNT(id) as total FROM article`)
+    } else {
+        total = await ctx.db.query(`SELECT COUNT(id) as total FROM article WHERE category_id = ${categoryId}`)
+    }
+    data = await ctx.db.query(`
+        SELECT 
+        a.id,
+        a.title,
+        a.author,
+        a.content,
+        a.cover,
+        a.category_id,
+        a.browse,
+        a.created_at,
+        b.name AS category_name,
+        COUNT(c.article_id) AS comments_sum
+        FROM article a 
+        LEFT JOIN category b 
+        ON a.category_id = b.id
+        LEFT JOIN comments c
+        ON a.id = c.article_id
+        ${categoryQuery}
+        GROUP BY a.id
+        ORDER BY ${type} DESC
+        LIMIT ${(page-1)*pageSize}, ${pageSize}
+    `)
     ctx.body = {
         code: 200,
         data: data,

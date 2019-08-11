@@ -3,7 +3,7 @@ const Router = require('koa-router');
 let router = new Router();
 
 router.get('/list', async ctx => {
-    let data = await ctx.db.query('SELECT id, name, `key` FROM category');
+    let data = await ctx.db.query('SELECT c.id, c.name, c.`key`, c.created_at, COUNT(a.category_id) AS category_sum FROM category c LEFT JOIN article a ON c.id = a.category_id GROUP BY c.id ORDER BY c.created_at DESC');
     ctx.body = {
         code: 200,
         data: data,
