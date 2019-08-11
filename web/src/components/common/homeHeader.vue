@@ -3,8 +3,8 @@
         <div class="center-wrap">
             <div class="logo">blog</div>
             <div class="btns">
-                <Button @click="jumpPage('/article')" type="text" class="active"><Icon class="icons" type="md-book" />文章</Button>
-                <Button @click="jumpPage('/about')"  type="text"><Icon class="icons" type="ios-chatbubbles-outline" />关于</Button>
+                <Button @click="jumpPage('/article')" type="text" :class="{'active': currentRouter === '/article'}"><Icon class="icons" type="md-book" />文章</Button>
+                <Button @click="jumpPage('/about')"  type="text" :class="{'active': currentRouter === '/about'}"><Icon class="icons" type="ios-chatbubbles-outline" />关于</Button>
             </div>
             <div class="search-input">
                 <Input v-model="searchVal" placeholder="请输入搜索内容">
@@ -17,14 +17,21 @@
 <script>
 export default {
     name: 'homeheader',
+    watch: {
+        $route (to, from) {
+            this.currentRouter = to.path
+        }
+    },
     data () {
         return {
-            searchVal: ''
+            searchVal: '',
+            currentRouter: '/article'
         }
     },
     created () {},
     methods: {
         jumpPage (path) {
+            this.currentRouter = path
             this.$router.push({path: path})
         }
     }

@@ -2,42 +2,43 @@
     <div class="content-wrap">
         <div class="content-list">
             <div class="list-header">
-                <Button class="active" type="text"><Icon class="icons" type="ios-bulb-outline" />最新</Button>
-                <Button type="text"><Icon class="icons" type="md-bulb" />最热</Button>
+                <Button :class="{'active': order === 0}" @click="searchOrder(0)" type="text"><Icon class="icons" type="ios-bulb-outline" />最新</Button>
+                <Button :class="{'active': order === 1}" @click="searchOrder(1)" type="text"><Icon class="icons" type="md-bulb" />最热</Button>
             </div>
             <div class="list-main">
                 <ul class="artical-list">
-                    <li class="clearfix" v-for="item in 10" :key="item" @click="jumpDetail(item)">
+                    <li class="clearfix" v-for="item in listData" :key="item.id" @click="jumpDetail(item)">
                         <div class="left-box">
-                            <h1>测试的大师傅阿斯蒂芬</h1>
+                            <h1>{{ item.title }}</h1>
                             <div class="labels">
-                                <span class="label">node</span>
+                                <span class="label">{{ item.category_name }}</span>
                                 <span>
                                     <Icon class="icons" type="ios-person-outline" />
-                                    张三
+                                    {{ item.author }}
                                 </span>
                                 <span>
                                     <Icon class="icons" type="ios-eye-outline" />
-                                    123
+                                    {{ item.browse }}
                                 </span>
                                 <span>
                                     <Icon class="icons" type="ios-text-outline" />
-                                    11
+                                    {{ item.comments_sum }}
                                 </span>
                                 <span>
                                     <Icon class="icons" type="ios-time-outline" />
-                                    2019-08-03
+                                    {{ item.created_at }}
                                 </span>
                             </div>
                         </div>
                         <div class="right-box">
-                            <img :src="defaultImg" alt="">
+                            <img v-if="item.cover" :src="item.cover" alt="">
+                            <img v-else :src="defaultImg" alt="">
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="list-footer">
-                <Page></Page>
+                <Page :total="total" :current="page" :page-size="pageSize" show-total show-elevator @on-change="changePage"></Page>
             </div>
         </div>
         <div class="sidebar">
@@ -48,11 +49,7 @@
                 </div>
                 <ul class="list">
                     <li>全部文章</li>
-                    <li><Button type="text">javascrpt(1)</Button></li>
-                    <li><Button type="text">javascrpt(1)</Button></li>
-                    <li><Button type="text">javascrpt(1)</Button></li>
-                    <li><Button type="text">javascrpt(1)</Button></li>
-                    <li><Button type="text">javascrpt(1)</Button></li>
+                    <li v-for="item in categoryList" :key="item.id" @click="searchCategory(item)"><Button type="text">{{ item.name }}（{{ item.category_sum }}）</Button></li>
                 </ul>
             </div>
             <div class="link-list">
@@ -61,47 +58,81 @@
                     <h2>外部链接</h2>
                 </div>
                 <ul class="list">
-                    <li><Button type="text">github</Button></li>
-                    <li><Button type="text">简书</Button></li>
-                    <li><Button type="text">CSDN博客</Button></li>
+                    <li v-for="(item, index) in linkList" :key="index"><Button @click="openLink(item.link)" type="text">{{ item.name }}</Button></li>
                 </ul>
             </div>
         </div>
     </div>
 </template>
 <script>
+import linkList from '@/data/link.json'
 export default {
     data () {
         return {
-            total: '',
+            total: 0,
             page: 1,
             pageSize: 10,
-            defaultImg: require('@/assets/images/default-img.jpg')
+            order: 0,
+            categoryId: '',
+            defaultImg: require('@/assets/images/default-img.jpg'),
+            listData: [],
+            categoryList: [],
+            linkList: linkList
         }
     },
     created () {
         this.getList()
+        this.getCategoryList()
     },
     methods: {
         getList () {
             let params = {
                 page: this.page,
-                pageSize: this.pageSize
+                pageSize: this.pageSize,
+                order: this.order,
+                categoryId: this.categoryId
             }
             this.$get('/api/article/list', params).then(res => {
                 if (res.code === 200) {
-                    console.log(res)
+                    this.listData = res.data
+                    this.total = res.page.total
+                    this.page = res.page.curPage
                 } else {
                     this.$Message.error(res.msg)
                 }
             })
         },
+        getCategoryList () {
+            this.$get('/api/category/list').then(res => {
+                if (res.code === 200) {
+                    this.categoryList = res.data
+                } else {
+                    this.$Message.error(res.msg)
+                }
+            })
+        },
+        searchOrder (val) {
+            this.order = val
+            this.categoryId = ''
+            this.page = 1
+            this.getList()
+        },
+        searchCategory (val) {
+            this.categoryId = val.id
+            this.getList()
+        },
+        changePage (page) {
+            this.page = page
+            this.getList()
+        },
         jumpDetail (val) {
-            console.log(val)
             this.$router.push({
                 path: '/detail',
-                query: {id: val}
+                query: {id: val.id}
             })
+        },
+        openLink (url) {
+            window.open(url)
         }
     }
 }
