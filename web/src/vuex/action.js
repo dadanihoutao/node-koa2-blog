@@ -12,5 +12,8 @@ export default {
     },
     setClientHeight ({ commit, state }, val) {
         state.clientHeight = val - 3
+    },
+    setSearchVal ({commit, state}, val) {
+        state.searchVal = val
     }
 }

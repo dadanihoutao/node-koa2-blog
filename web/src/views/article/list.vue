@@ -66,6 +66,7 @@
 </template>
 <script>
 import linkList from '@/data/link.json'
+import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
@@ -80,17 +81,32 @@ export default {
             linkList: linkList
         }
     },
+    watch: {
+        searchVal (nVal, oVal) {
+            this.categoryId = ''
+            this.getList()
+        }
+    },
     created () {
         this.getList()
         this.getCategoryList()
     },
+    computed: {
+        ...mapState([
+            'searchVal'
+        ])
+    },
     methods: {
+        ...mapActions([
+            'setSearchVal'
+        ]),
         getList () {
             let params = {
                 page: this.page,
                 pageSize: this.pageSize,
                 order: this.order,
-                categoryId: this.categoryId
+                categoryId: this.categoryId,
+                searchVal: this.searchVal
             }
             this.$get('/api/article/list', params).then(res => {
                 if (res.code === 200) {
@@ -118,6 +134,7 @@ export default {
             this.getList()
         },
         searchCategory (val) {
+            this.setSearchVal(null)
             this.categoryId = val.id
             this.getList()
         },

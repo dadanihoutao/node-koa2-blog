@@ -14,7 +14,8 @@ Vue.use(Vuex)
 const state = {
     clientHeight: null,
     mainHeight: null,
-    clientWidth: null
+    clientWidth: null,
+    searchVal: null
 }
 
 export default new Vuex.Store({

@@ -1,29 +1,29 @@
 <template>
     <div class="detail-page">
         <div class="detail-header">
-            <h1>测试的大师傅阿斯蒂芬</h1>
+            <h1>{{ data.title }}</h1>
             <div class="labels">
-                <span class="label">node</span>
+                <span class="label">{{ data.category_name }}</span>
                 <span>
                     <Icon class="icons" type="ios-person-outline" />
-                    张三
+                    {{ data.author }}
                 </span>
                 <span>
                     <Icon class="icons" type="ios-eye-outline" />
-                    123
+                    {{ data.browse }}
                 </span>
                 <span>
                     <Icon class="icons" type="ios-text-outline" />
-                    11
+                    {{ data.comments_sum }}
                 </span>
                 <span>
                     <Icon class="icons" type="ios-time-outline" />
-                    2019-08-03
+                    {{ data.created_at }}
                 </span>
             </div>
         </div>
         <div class="detail-content">
-            asfasfasf
+            <div v-html="readmeContent"></div>
         </div>
         <div class="detail-footer">
             <div class="comment-form">
@@ -31,10 +31,10 @@
                 <div class="form-wrap">
                     <Form class="form" :model="form" label-position="left" :label-width="100" >
                         <FormItem label="昵称">
-                            <Input v-model="form.title" placeholder="请输入昵称"></Input>
+                            <Input v-model="form.nickname" placeholder="请输入昵称"></Input>
                         </FormItem>
                         <FormItem label="邮箱">
-                            <Input v-model="form.author" placeholder="请输入邮箱（不会被公开）"></Input>
+                            <Input v-model="form.email" placeholder="请输入邮箱（不会被公开）"></Input>
                         </FormItem>
                         <FormItem label="内容">
                             <mavon-editor
@@ -52,21 +52,22 @@
                     </Form>
                 </div>
             </div>
-            <div class="comment-list">
+            <div class="comment-list" v-if="commentsList.length">
                 <h2 class="title">评论列表</h2>
                 <ul class="list">
-                    <li v-for="item in 5" :key="item">
+                    <li v-for="item in commentsList" :key="item.id">
                         <p class="title">
                             <Icon class="icons" type="ios-chatboxes-outline" />
-                            来自「张三」的评论：
+                            来自「{{item.nickname}}」的评论：
                         </p>
                         <p class="text">
-                            asdas地方撒是发顺丰大上发大水发安抚阿萨法是否啊阿斯蒂芬安抚阿萨法
+                            {{item.content}}
+                            <span class="timer">评论时间：{{item.created_at}}</span>
                         </p>
                     </li>
                 </ul>
                 <div class="page-wrap">
-                    <Page></Page>
+                    <Page :total="total" :current="page" :page-size="pageSize" show-total show-elevator @on-change="changePage"></Page>
                 </div>
             </div>
         </div>
@@ -74,21 +75,61 @@
 </template>
 <script>
 import _ from 'lodash'
+import marked from 'marked'
 const formParams = {
-    title: '',
-    author: '',
-    content: ''
+    nickname: '',
+    email: '',
+    content: '',
+    article_id: ''
 }
 export default {
     name: 'detailpage',
     data () {
         return {
+            total: 0,
+            page: 1,
+            pageSize: 5,
             form: _.cloneDeep(formParams),
-            imgFile: {}
+            imgFile: {},
+            data: {},
+            readmeContent: '',
+            commentsList: []
         }
     },
-    created () {},
+    created () {
+        this.id = this.$route.query.id
+        if (this.id) {
+            this.getDetail()
+        }
+    },
+    computed: {
+    },
     methods: {
+        getDetail () {
+            this.$get('/api/article/detail/' + this.id).then(res => {
+                if (res.code === 200) {
+                    this.data = res.data
+                    this.readmeContent = marked(res.data.content || '', {
+                        sanitize: true
+                    })
+                    this.getCommentsList()
+                } else {
+                    this.$Message.error(res.msg)
+                }
+            })
+        },
+        getCommentsList () {
+            let params = { page: this.page, pageSize: this.pageSize, id: this.data.id }
+            this.$get('/api/comments/list', params).then(res => {
+                if (res.code === 200) {
+                    this.commentsList = res.data
+                    this.page = res.page.curPage
+                    this.total = res.page.total
+                } else {
+                    this.$Message.error(res.msg)
+                }
+            })
+        },
         handleEditorImgAdd (pos, $file) {
             let formdata = new FormData()
             formdata.append('file', $file)
@@ -128,7 +169,23 @@ export default {
         handleEditorImgDel (pos) {
             delete this.imgFile[pos]
         },
-        handleSubmit () {}
+        handleSubmit () {
+            let params = _.cloneDeep(this.form)
+            params.article_id = this.data.id
+            this.$post('/api/comments/add', params).then(res => {
+                if (res.code === 200) {
+                    this.$Message.success('添加成功')
+                    this.handleReset()
+                    this.getCommentsList()
+                } else {
+                    this.$Message.error(res.msg)
+                }
+            })
+        },
+        changePage (page) {
+            this.page = page
+            this.getCommentsList()
+        }
     }
 }
 </script>
@@ -167,6 +224,25 @@ export default {
     .detail-content {
         padding: 30px 0;
         min-height: 200px;
+        div {
+           p {
+               font-size: 16px;
+               line-height: 36px;
+           }
+           img {
+               width: 500px;
+               display: block;
+           }
+            pre {
+                padding: 20px;
+                background-color: #FAFBFE;
+                margin-top: 20px;
+                border-radius: 4px;
+            }
+            code {
+                font-size: 14px;
+            }
+        }
     }
     .detail-footer {
         .comment-form {
@@ -193,6 +269,11 @@ export default {
                     .text {
                         font-size: 14px;
                         text-indent: 2em;
+                    }
+                    .timer {
+                        margin-left: 20px;
+                        font-size: 12px;
+                        color: #999999;
                     }
                 }
             }

@@ -7,7 +7,7 @@
                 <Button @click="jumpPage('/about')"  type="text" :class="{'active': currentRouter === '/about'}"><Icon class="icons" type="ios-chatbubbles-outline" />关于</Button>
             </div>
             <div class="search-input">
-                <Input v-model="searchVal" placeholder="请输入搜索内容">
+                <Input v-model="searchInputVal" @on-enter="handleSearchVal" clearable @on-clear="handleClearSearchVal" placeholder="请输入搜索内容">
                     <Icon type="ios-search" slot="prefix" />
                 </Input>
             </div>
@@ -15,24 +15,43 @@
     </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
     name: 'homeheader',
     watch: {
         $route (to, from) {
             this.currentRouter = to.path
+        },
+        searchVal (nVal) {
+            this.searchInputVal = nVal
         }
     },
     data () {
         return {
-            searchVal: '',
+            searchInputVal: null,
             currentRouter: '/article'
         }
     },
     created () {},
+    computed: {
+        ...mapState([
+            'searchVal'
+        ])
+    },
     methods: {
+        ...mapActions([
+            'setSearchVal'
+        ]),
         jumpPage (path) {
             this.currentRouter = path
             this.$router.push({path: path})
+        },
+        handleSearchVal () {
+            this.setSearchVal(this.searchInputVal)
+        },
+        handleClearSearchVal () {
+            this.searchInputVal = null
+            this.setSearchVal(this.searchInputVal)
         }
     }
 }
