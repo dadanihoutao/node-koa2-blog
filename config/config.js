@@ -21,7 +21,7 @@ const protConfig = {
     dbUser: 'test',
     dbPort: 3306,
     timezone: '08:00',
-    host: 'http://www.lokiblog.com'
+    host: 'http://admin.lokiblog.com'
 }
 
 let config = {}
