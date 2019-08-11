@@ -95,7 +95,7 @@ router.get('/detail/:id', async ctx => {
 // 添加文章
 router.post('/add', async ctx => {
     let { title, author, content, category_id, cover } = ctx.request.fields;
-    if (title && author && content && category_id && cover) {
+    if (title && author && content && category_id) {
         let data = await ctx.db.query(`SELECT * FROM article WHERE title=?`, [title])
         if (data.length) {
             ctx.body = {
