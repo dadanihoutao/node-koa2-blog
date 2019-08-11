@@ -20,7 +20,7 @@
                     multiple
                     :format="['jpg','png','gif']"
                     type="drag"
-                    action="http://127.0.0.1:3001/api/upload/fileds"
+                    action="/api/upload/fileds"
                     :on-success="handleUploadSuccess"
                     :on-format-error="handleUploadFormatError"
                 >
