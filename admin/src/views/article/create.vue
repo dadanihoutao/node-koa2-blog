@@ -85,6 +85,7 @@ export default {
             })
         },
         handleUploadSuccess (res, file, fileList) {
+            console.log(res.data)
             this.imgUrl = res.data
         },
         handleUploadFormatError () {
@@ -104,6 +105,7 @@ export default {
             instance.post('/api/upload/fileds', formdata).then(res => {
                 if (res.data.code === 200) {
                     this.$Message.success('上传成功')
+                    console.log(res.data.data)
                     let url = res.data.data
                     let name = $file.name
                     let content = this.form.content
