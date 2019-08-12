@@ -3,7 +3,7 @@ const Router = require('koa-router');
 const config = require('./config/config');
 const db = require('./config/database');
 const body = require('koa-better-body');
-const static = require('koa-static');
+// const static = require('koa-static');
 const cors = require('koa2-cors');
 const proving = require('./app/token/proving');
 const path = require('path');
@@ -19,7 +19,7 @@ server.use(body({
 }))
 
 // 静态文件托管，上传的图片可以通过路径访问
-server.use(static(path.resolve(__dirname, './static/')))
+// server.use(static(path.resolve(__dirname, './static/')))
 
 // 解决跨域
 server.use(cors({
