@@ -10,11 +10,10 @@ router.post('/fileds', async ctx => {
         let suffix = ctx.request.fields['file'][0].name.split('.')[1];
         let path = ctx.request.fields['file'][0].path
         let newPath = `${path}.${suffix}` 
-        fs.rename(path, newPath, (err) => {
-            if (err) throw err;
-        })
+        fs.renameSync(path, newPath)
         let url = newPath.substr(newPath.indexOf('/upload'));
         let origin = `${ctx.config.host}:${ctx.config.port}${url}`
+        console.log(origin)
         ctx.body = {
             code: 200,
             data: origin,
