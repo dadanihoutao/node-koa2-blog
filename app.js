@@ -7,6 +7,7 @@ const static = require('koa-static');
 const cors = require('koa2-cors');
 const proving = require('./app/token/proving');
 const path = require('path');
+const common = require('./app/libs/common');
 
 let server = new Koa()
 server.listen(config.port)
@@ -46,29 +47,21 @@ router.use(async (ctx, next) => {
         // 其他接口检测有没有携带token
         let token = ctx.request.header.authorization
         if (token.split(' ')[1]) {
-        // if (token.split(' ')[1] !== 'undefined') {
             let res = proving(token)
             if (res && res.exp <= (new Date() / 1000)){
-                ctx.body = {
-                    code: 101,
-                    data: '',
-                    // msg: 'token过期'
-                    msg: '登录过期，请重新登录'
-                }
+                // token 过期
+                ctx.body = common.handleResulte(101, '', '登录过期，请重新登录')
             } else {
                 await next()
             }
         } else {
-            ctx.body = {
-                code: 101,
-                data: '',
-                // msg: '没有token'
-                msg: '请登录'
-            }
+            // 没有token
+            ctx.body = common.handleResulte(101, '', '请登录')
         }
     }
 })
-// 后台接口 ============================================= 
+
+// 路由入口
 // 登录注册接口
 router.use('/api/admin', require('./app/api/admin'));
 // 分类接口
@@ -79,7 +72,5 @@ router.use('/api/article', require('./app/api/article'));
 router.use('/api/upload', require('./app/api/upload'));
 // 评论
 router.use('/api/comments', require('./app/api/comments'));
-
-// 前台接口 ==============================================
 
 server.use(router.routes());

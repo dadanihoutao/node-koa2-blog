@@ -9,12 +9,16 @@
                 <Button size="small" type="error" @click="deletecategory(row.id)">删除</Button>
             </template>
         </Table>
+        <Spin fix v-if="spinShow">
+            <Icon type="ios-loading" size=36 class="spin-icon-load"></Icon>
+        </Spin>
     </div>
 </template>
 <script>
 export default {
     data () {
         return {
+            spinShow: false,
             tableData: [],
             columns: [
                 {
@@ -45,8 +49,10 @@ export default {
     },
     methods: {
         getList () {
+            this.spinShow = true
             this.$get('/api/category/list').then(res => {
                 if (res.code === 200) {
+                    this.spinShow = false
                     this.tableData = res.data
                 } else {
                     this.$Message.error(res.msg)

@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const serect = 'token'; //密钥，不能丢
 module.exports = (userinfo) => {
-    console.log(2222,userinfo)
 	const token = jwt.sign(
 		{
 			email: userinfo.email,

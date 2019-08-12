@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const path = require('path');
 const fs = require('fs');
+const common = require('../libs/common');
 
 let router = new Router()
 
@@ -13,18 +14,9 @@ router.post('/fileds', async ctx => {
         fs.renameSync(path, newPath)
         let url = newPath.substr(newPath.indexOf('/upload'));
         let origin = `${ctx.config.host}:${ctx.config.port}${url}`
-        console.log(origin)
-        ctx.body = {
-            code: 200,
-            data: origin,
-            msg: '上传成功'
-        }
+        ctx.body = common.handleResulte(200, origin, '上传成功')
     } else {
-        ctx.body = {
-            code: 201,
-            data: '',
-            msg: '请添加图片'
-        }
+        ctx.body = common.handleResulte(201, '', '请添加图片')
     }
 })
 

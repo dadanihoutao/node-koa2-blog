@@ -17,5 +17,14 @@ module.exports = {
                 }
             })
         })
+    },
+    handleResulte (code, data, msg, page, token) {
+        if (page) {
+            return { code, data, msg, page }
+        }
+        if (token) {
+            return { code, data, msg, token}
+        }
+        return { code, data, msg }
     }
 }

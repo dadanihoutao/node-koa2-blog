@@ -12,20 +12,10 @@ router.post('/register', async ctx => {
     let vals = Object.values(ctx.request.fields);
     let data = await ctx.db.query(`SELECT * FROM admin`);
     let isTrue = data.findIndex(item => item.email === email)
-    if (isTrue !== -1) {
-        ctx.body = {
-            code: 201,
-            data: '',
-            msg: '此邮箱已被注册'
-        }
-    } else {
-        await ctx.db.query(`INSERT INTO admin (nickname, email, password) VALUES(?,?,?)`, vals)
-        ctx.body = {
-            code: 200,
-            data: '',
-            msg: '注册成功'
-        }
-    }
+    if (isTrue !== -1) return ctx.body = common.handleResulte(201, '', '此邮箱已被注册')
+        
+    await ctx.db.query(`INSERT INTO admin (nickname, email, password) VALUES(?,?,?)`, vals)
+    ctx.body = common.handleResulte(200, '', '注册成功')
 })
 
 router.post('/login', async ctx => {
@@ -34,39 +24,19 @@ router.post('/login', async ctx => {
     let result = data.find(item => item.email === email)
     if ( result && result instanceof Object && Object.keys(result).length) {
         let pass = common.md5(ctx.config.ADMIN_PREFIX + password);
-        if (pass === result.password) {
-            let token = addtoken({email: email, username: result.nickname})
-            // ctx.config.token = token
-            ctx.body = {
-                token: token,
-                code: 200,
-                data: result,
-                msg: '登录成功'
-            };
-        } else {
-            ctx.body = {
-                code: 201,
-                data: '',
-                msg: '密码不正确'
-            };
-        }
+
+        if (pass !== result.password) return ctx.body = common.handleResulte(201, '', '密码不正确')
+        
+        let token = addtoken({email: email, username: result.nickname})
+        ctx.body = common.handleResulte(200, result, '登录成功', '', token)
     } else {
-        ctx.body = {
-            code: 201,
-            data: '',
-            msg: '没有此用户'
-        }; 
+        ctx.body = common.handleResulte(201, '', '没有此用户')
     }
 })
 
 // 测试token 的接口 用来查看环境变量
 router.get('/test', async ctx => {
-    let token = ctx.request.header.authorization
-    ctx.body = {
-        code: 200,
-        data: process.env.NODE_ENV,
-        msg: ''
-    }
+    ctx.body = common.handleResulte(200, process.env.NODE_ENV, '')
 
 })
 
