@@ -1,19 +1,19 @@
 <template>
     <div class="admin-login">
-        <h3 class="title">时洋的博客</h3>
+        <h3 class="title">博客后台管理</h3>
         <Form class="formInline" ref="formInline" :model="loginData" :rules="ruleInline" >
             <FormItem prop="email">
-                <Input type="text" v-model="loginData.email" placeholder="请输入邮箱">
+                <Input size="large" type="text" v-model="loginData.email" placeholder="请输入邮箱">
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem prop="password">
-                <Input type="password" v-model="loginData.password" @on-enter="handleSubmit('formInline')" placeholder="请输入密码">
+                <Input size="large" type="password" v-model="loginData.password" @on-enter="handleSubmit('formInline')" placeholder="请输入密码">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+                <Button class="submit-btn" size="large" type="primary" @click="handleSubmit('formInline')">登录</Button>
             </FormItem>
         </Form>
     </div>
@@ -65,7 +65,7 @@ export default {
 .admin-login {
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    background: url('./../../assets/images/login-bg.jpg') no-repeat 100% 100%;
     .title {
         text-align: center;
         font-size: 30px;
@@ -75,6 +75,9 @@ export default {
         width: 300px;
         margin: 0 auto;
         padding-top: 100px;
+    }
+    .submit-btn {
+        width: 100%;
     }
 }
 </style>
