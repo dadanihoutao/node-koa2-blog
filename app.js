@@ -20,7 +20,8 @@ server.use(body({
 }))
 
 // 静态文件托管，上传的图片可以通过路径访问
-server.use(static(path.resolve(__dirname, './static/')))
+// server.use(static(path.resolve(__dirname, './static/')))
+server.use(static(__dirname + '/static/'))
 
 // 解决跨域
 server.use(cors({
