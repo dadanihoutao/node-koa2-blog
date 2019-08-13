@@ -20,9 +20,11 @@
                     multiple
                     :format="['jpg','png','gif']"
                     type="drag"
-                    action="http://localhost:3001/api/upload/fileds"
+                    :max-size="2048"
+                    action="/api/upload/fileds"
                     :on-success="handleUploadSuccess"
                     :on-format-error="handleUploadFormatError"
+                    :on-exceeded-size="handleMaxSize"
                 >
                     <div style="padding: 20px 0">
                         <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -117,6 +119,9 @@ export default {
         },
         handleUploadFormatError () {
             this.$Message.error('请上传 jpg, png, gif 格式文件')
+        },
+        handleMaxSize () {
+            this.$Message.error('图片过大请上传2M一下的图片')
         },
         handleEditorImgAdd (pos, $file) {
             let formdata = new FormData()
