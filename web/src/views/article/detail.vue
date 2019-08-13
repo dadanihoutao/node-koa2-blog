@@ -29,11 +29,11 @@
             <div class="comment-form">
                 <h2 class="title">欢迎评论</h2>
                 <div class="form-wrap">
-                    <Form class="form" :model="form" label-position="left" :label-width="100" >
-                        <FormItem label="昵称">
+                    <Form ref="form" class="form" :model="form" :rules="ruleInline" label-position="left" :label-width="100" >
+                        <FormItem label="昵称" prop="nickname">
                             <Input v-model="form.nickname" placeholder="请输入昵称"></Input>
                         </FormItem>
-                        <FormItem label="邮箱">
+                        <FormItem label="邮箱" prop="email">
                             <Input v-model="form.email" placeholder="请输入邮箱（不会被公开）"></Input>
                         </FormItem>
                         <FormItem label="内容">
@@ -93,7 +93,16 @@ export default {
             imgFile: {},
             data: {},
             readmeContent: '',
-            commentsList: []
+            commentsList: [],
+            ruleInline: {
+                nickname: [
+                    { required: true, message: '请输入昵称', trigger: 'blue' }
+                ],
+                email: [
+                    { required: true, message: '请输入邮箱', trigger: 'blue' },
+                    { type: 'email', message: '请输入正确的邮箱', trigger: 'blur' }
+                ]
+            }
         }
     },
     created () {
@@ -170,15 +179,20 @@ export default {
             delete this.imgFile[pos]
         },
         handleSubmit () {
-            let params = _.cloneDeep(this.form)
-            params.article_id = this.data.id
-            this.$post('/api/comments/add', params).then(res => {
-                if (res.code === 200) {
-                    this.$Message.success('添加成功')
-                    this.handleReset()
-                    this.getCommentsList()
-                } else {
-                    this.$Message.error(res.msg)
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    let params = _.cloneDeep(this.form)
+                    params.article_id = this.data.id
+                    if (!params.content) return this.$Message.warning('请输入评论内容')
+                    this.$post('/api/comments/add', params).then(res => {
+                        if (res.code === 200) {
+                            this.$Message.success('添加成功')
+                            this.handleReset()
+                            this.getCommentsList()
+                        } else {
+                            this.$Message.error(res.msg)
+                        }
+                    })
                 }
             })
         },

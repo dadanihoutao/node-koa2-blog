@@ -29,11 +29,12 @@ export default {
             },
             ruleInline: {
                 email: [
-                    { required: true, message: '请输入邮箱', trigger: 'blue' }
+                    { required: true, message: '请输入邮箱', trigger: 'blue' },
+                    { type: 'email', message: '请输入正确的邮箱', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blue' },
-                    { type: 'string', min: 6, message: '密码长度不能' }
+                    { type: 'string', min: 6, message: '密码长度不能小于6位' }
                 ]
             }
         }
@@ -52,8 +53,6 @@ export default {
                             this.$Message.error(res.msg)
                         }
                     })
-                } else {
-                    this.$Message.error('失败!')
                 }
             })
         }

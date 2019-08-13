@@ -1,10 +1,10 @@
 <template>
     <div class="admin-article-create">
-        <Form class="form" :model="form" label-position="left" :label-width="100" >
-            <FormItem label="文章标题" style="width: 600px">
+        <Form ref="form" class="form" :model="form" :rules="ruleValidate" label-position="left" :label-width="100" >
+            <FormItem label="文章标题" style="width: 600px" prop="title">
                 <Input v-model="form.title" placeholder="文章标题"></Input>
             </FormItem>
-            <FormItem label="文章作者" style="width: 600px">
+            <FormItem label="文章作者" style="width: 600px" prop="author">
                 <Input v-model="form.author" placeholder="文章作者"></Input>
             </FormItem>
             <FormItem label="文章分类" style="width:600px">
@@ -54,7 +54,7 @@ const formParams = {
     title: '',
     author: '',
     content: '',
-    category_id: null,
+    category_id: '',
     cover: ''
 }
 export default {
@@ -65,7 +65,15 @@ export default {
             categoryList: [],
             headers: {},
             imgUrl: '',
-            imgFile: {}
+            imgFile: {},
+            ruleValidate: {
+                title: [
+                    { required: true, message: '标题不能为空', trigger: 'blur' }
+                ],
+                author: [
+                    { required: true, message: '作者不能为空', trigger: 'blur' }
+                ]
+            }
         }
     },
     created () {
@@ -85,7 +93,6 @@ export default {
             })
         },
         handleUploadSuccess (res, file, fileList) {
-            console.log(res.data)
             this.imgUrl = res.data
         },
         handleUploadFormatError () {
@@ -105,7 +112,6 @@ export default {
             instance.post('/api/upload/fileds', formdata).then(res => {
                 if (res.data.code === 200) {
                     this.$Message.success('上传成功')
-                    console.log(res.data.data)
                     let url = res.data.data
                     let name = $file.name
                     let content = this.form.content
@@ -133,13 +139,20 @@ export default {
             delete this.imgFile[pos]
         },
         handleSubmit () {
-            let params = _.cloneDeep(this.form)
-            params.cover = this.imgUrl
-            this.$post('/api/article/add', params).then(res => {
-                if (res.code === 200) {
-                    this.$Message.success('添加成功')
-                } else {
-                    this.$Message.error(res.msg)
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    let params = _.cloneDeep(this.form)
+                    params.cover = this.imgUrl
+                    if (!params.category_id) return this.$Message.warning('请选择文章分类')
+                    if (!params.cover) return this.$Message.warning('请上传封面图片')
+                    if (!params.content) return this.$Message.warning('请填写文章内容')
+                    this.$post('/api/article/add', params).then(res => {
+                        if (res.code === 200) {
+                            this.$Message.success('添加成功')
+                        } else {
+                            this.$Message.error(res.msg)
+                        }
+                    })
                 }
             })
         }

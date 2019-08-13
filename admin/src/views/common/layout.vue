@@ -84,10 +84,10 @@ export default {
                 this.setClientWidth(this.clientWidth)
             })
         }
-    },
-    destroyed () {
-        window.removeEventListener('resize', this.measure(), false)
     }
+    // destroyed () {
+    //     window.removeEventListener('resize', this.measure(), false)
+    // }
 }
 </script>
 <style lang="less">

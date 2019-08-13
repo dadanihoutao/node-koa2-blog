@@ -1,10 +1,10 @@
 <template>
     <div class="admin-category-create">
-        <Form class="form" :model="form" label-position="left" :label-width="100" >
-            <FormItem label="分类名称">
+        <Form ref="form" class="form" :model="form" :rules="ruleInline" label-position="left" :label-width="100" >
+            <FormItem label="分类名称" prop="name">
                 <Input v-model="form.name"></Input>
             </FormItem>
-            <FormItem label="分类关键字">
+            <FormItem label="分类关键字" prop="key">
                 <Input v-model="form.key"></Input>
             </FormItem>
             <FormItem>
@@ -21,18 +21,30 @@ export default {
             form: {
                 name: '',
                 key: ''
+            },
+            ruleInline: {
+                name: [
+                    { required: true, message: '请输入分类名称', trigger: 'blur' }
+                ],
+                key: [
+                    { required: true, message: '请输入关键字', trigger: 'blur' }
+                ]
             }
         }
     },
     created () {},
     methods: {
         handleSubmit () {
-            this.$post('/api/category/add', this.form).then(res => {
-                if (res.code === 200) {
-                    this.$Message.success('添加成功')
-                    this.handleReset()
-                } else {
-                    this.$Message.error(res.msg)
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    this.$post('/api/category/add', this.form).then(res => {
+                        if (res.code === 200) {
+                            this.$Message.success('添加成功')
+                            this.handleReset()
+                        } else {
+                            this.$Message.error(res.msg)
+                        }
+                    })
                 }
             })
         },

@@ -75,7 +75,7 @@ export default {
             pageSize: 10,
             order: 0,
             categoryId: '',
-            defaultImg: require('@/assets/images/default-img.jpg'),
+            defaultImg: require('@/assets/images/defaultImg.jpg'),
             listData: [],
             categoryList: [],
             linkList: linkList

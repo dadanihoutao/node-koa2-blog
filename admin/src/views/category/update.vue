@@ -1,10 +1,10 @@
 <template>
     <div class="admin-category-update">
-        <Form class="form" :model="form" label-position="left" :label-width="100" >
-            <FormItem label="分类名称">
+        <Form ref="form" class="form" :model="form" label-position="left" :rules="ruleInline" :label-width="100" >
+            <FormItem label="分类名称" prop="name">
                 <Input v-model="form.name"></Input>
             </FormItem>
-            <FormItem label="分类关键字">
+            <FormItem label="分类关键字" prop="key">
                 <Input v-model="form.key"></Input>
             </FormItem>
             <FormItem>
@@ -22,6 +22,14 @@ export default {
                 name: '',
                 key: '',
                 id: ''
+            },
+            ruleInline: {
+                name: [
+                    { required: true, message: '请输入分类名称', trigger: 'blur' }
+                ],
+                key: [
+                    { required: true, message: '请输入关键字', trigger: 'blur' }
+                ]
             }
         }
     },
@@ -39,14 +47,18 @@ export default {
             })
         },
         handleSubmit () {
-            let params = { key: this.form.key, name: this.form.name }
-            let id = this.form.id
-            this.$put('/api/category/update/' + id, params).then(res => {
-                if (res.code === 200) {
-                    this.$Message.success('更新成功')
-                    this.$router.go(-1)
-                } else {
-                    this.$Message.error(res.msg)
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    let params = { key: this.form.key, name: this.form.name }
+                    let id = this.form.id
+                    this.$put('/api/category/update/' + id, params).then(res => {
+                        if (res.code === 200) {
+                            this.$Message.success('更新成功')
+                            this.$router.go(-1)
+                        } else {
+                            this.$Message.error(res.msg)
+                        }
+                    })
                 }
             })
         },

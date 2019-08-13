@@ -3,7 +3,12 @@
         <div class="add-category">
             <Button type="primary" @click="addCategory"><Icon type="md-add" />新增分类</Button>
         </div>
-        <Table stripe border :columns="columns" :data="tableData">
+        <Table
+            stripe
+            :columns="columns"
+            :data="tableData"
+            :max-height="clientHeight - 220"
+        >
             <template slot-scope="{row}" slot="opt">
                 <Button size="small" type="primary" @click="modifiyCategory(row.id)">编辑</Button>
                 <Button size="small" type="error" @click="deletecategory(row.id)">删除</Button>
@@ -15,6 +20,7 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     data () {
         return {
@@ -46,6 +52,11 @@ export default {
     },
     created () {
         this.getList()
+    },
+    computed: {
+        ...mapState([
+            'clientHeight'
+        ])
     },
     methods: {
         getList () {

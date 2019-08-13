@@ -1,7 +1,9 @@
 <template>
     <div class="header">
         <div class="center-wrap">
-            <div class="logo">blog</div>
+            <div class="logo">
+                <img class="logo-img" :src="defaultImg" alt="">
+            </div>
             <div class="btns">
                 <Button @click="jumpPage('/article')" type="text" :class="{'active': currentRouter === '/article'}"><Icon class="icons" type="md-book" />文章</Button>
                 <Button @click="jumpPage('/about')"  type="text" :class="{'active': currentRouter === '/about'}"><Icon class="icons" type="ios-chatbubbles-outline" />关于</Button>
@@ -29,7 +31,8 @@ export default {
     data () {
         return {
             searchInputVal: null,
-            currentRouter: '/article'
+            currentRouter: '/article',
+            defaultImg: require('@/assets/images/defaultImg.jpg')
         }
     },
     created () {},
@@ -72,6 +75,12 @@ export default {
             font-size: 20px;
             line-height: 70px;
             margin-right: 60px;
+            .logo-img {
+                width: 40px;
+                height: 40px;
+                vertical-align: middle;
+                margin-left: 20px;
+            }
         }
         .btns {
             .icons {

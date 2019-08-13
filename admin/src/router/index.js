@@ -82,7 +82,6 @@ const routes = [
         redirect: { name: '404' }
     }
 ]
-console.log(routes)
 const router = new Router({
     // mode: 'history',
     routes: routes

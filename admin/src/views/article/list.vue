@@ -3,7 +3,12 @@
         <div class="add-article">
             <Button type="primary" @click="addArticle"><Icon type="md-add" />新增文章</Button>
         </div>
-        <Table stripe border :columns="columns" :data="tableData">
+        <Table
+            stripe
+            :columns="columns"
+            :data="tableData"
+            :max-height="clientHeight - 268"
+        >
             <template slot-scope="{row}" slot="opt">
                 <Button size="small" type="primary" @click="modifiyArticle(row.id)">编辑</Button>
                 <Button size="small" type="error" @click="deleteArticle(row.id)">删除</Button>
@@ -18,13 +23,14 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     data () {
         return {
             spinShow: false,
             total: 0,
             page: 1,
-            pageSize: 5,
+            pageSize: 20,
             tableData: [],
             columns: [
                 {
@@ -66,6 +72,11 @@ export default {
     },
     created () {
         this.getList()
+    },
+    computed: {
+        ...mapState([
+            'clientHeight'
+        ])
     },
     methods: {
         getList () {
@@ -125,8 +136,10 @@ export default {
     }
     .page-wrapper {
         margin-top: 30px;
-        width: 100%;
         text-align: right;
+        position: absolute;
+        bottom: 75px;
+        right: 50px;
     }
 }
 </style>

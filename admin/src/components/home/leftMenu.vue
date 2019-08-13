@@ -1,6 +1,6 @@
 <template>
     <aside class="menu">
-        <div class="header-title">yangblog.com</div>
+        <div class="header-title">lokiblog.com</div>
         <Menu
             :accordion="true"
             width="auto"
