@@ -46,7 +46,7 @@ router.use(async (ctx, next) => {
     } else {
         // 其他接口检测有没有携带token
         let token = ctx.request.header.authorization
-        if (true) {
+        if (token && token.split(' ')[1]) {
             let res = proving(token)
             if (res && res.exp <= (new Date() / 1000)){
                 // token 过期
