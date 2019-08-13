@@ -66,6 +66,11 @@ export default {
         ]),
         getUserInfo () {
             this.userInfo = this.$Lockr.get('userinfo')
+            this.$get('/api/admin/test').then(res => {
+                if (res.code === 200) {
+                    console.log(res)
+                }
+            })
         },
         logOut () {
             this.$Lockr.rm('token')
