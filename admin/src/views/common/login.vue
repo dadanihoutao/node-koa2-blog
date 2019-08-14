@@ -64,7 +64,8 @@ export default {
 .admin-login {
     width: 100%;
     height: 100%;
-    background: url('./../../assets/images/login-bg.jpg') no-repeat 100% 100%;
+    background: url('./../../assets/images/login-bg.jpg') no-repeat;
+    background-size: cover;
     .title {
         text-align: center;
         font-size: 30px;

@@ -115,6 +115,7 @@ export default {
             })
         },
         handleUploadSuccess (res, file, fileList) {
+            this.$Message.success('上传成功')
             this.imgUrl = res.data
         },
         handleUploadFormatError () {

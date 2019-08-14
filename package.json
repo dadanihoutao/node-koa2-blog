@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "export NODE_ENV='development' && supervisor app.js",
-    "prot": "pm2 start ecosystem.config.js --only prod-implant --watch"
+    "prot": "pm2 start ecosystem.config.js --only prod-implant"
   },
   "repository": {
     "type": "git",
