@@ -120,6 +120,9 @@ export default {
                     this.$Message.success('上传成功')
                     let url = res.data.data
                     let name = $file.name
+                    if (name.includes('-')) {
+                        name = name.replace(/-/g, '')
+                    }
                     let content = this.form.content
                     if (content.includes(name)) {
                         let oStr = `(${pos})`
