@@ -7,6 +7,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Lockr from 'lockr'
 import { LoadingBar } from 'iview'
+import conf from './../../config/conf'
 
 Vue.use(Router)
 
@@ -83,7 +84,7 @@ const routes = [
     }
 ]
 const router = new Router({
-    // mode: 'history',
+    mode: conf.mode,
     routes: routes
 })
 router.beforeEach((to, from, next) => {

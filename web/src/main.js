@@ -14,6 +14,7 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import axios from 'axios'
 import { post, get, doDelete, deleteOne, put } from './libs/http'
+import conf from './../config/conf'
 
 // 定义全局变量
 Vue.prototype.$imgHost = 'https://res.qiaolu.com/'
@@ -25,6 +26,8 @@ Vue.prototype.$deleteOne = deleteOne
 Vue.prototype.$put = put
 Vue.prototype.$Lockr = Lockr
 Vue.prototype.$Bus = new Vue()
+Vue.prototype.$conf = conf
+console.log(conf)
 
 Vue.config.productionTip = false
 

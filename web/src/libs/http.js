@@ -9,7 +9,7 @@ import qs from 'qs'
 import { Modal, Message } from 'iview'
 import Lockr from 'lockr'
 
-const HOST = 'http://192.168.0.104:3001/api'
+const HOST = ''
 
 Vue.prototype.$host = HOST
 
