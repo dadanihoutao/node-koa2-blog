@@ -7,6 +7,10 @@ if (env === 'development') {
     configObject = {
         mode: 'hash'
     }
+} else if (env === 'testing') {
+    configObject = {
+        mode: 'history'
+    }
 } else if (env === 'production') {
     configObject = {
         mode: 'history'
