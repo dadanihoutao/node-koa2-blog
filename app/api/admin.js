@@ -2,7 +2,6 @@ const Router = require('koa-router');
 const common = require('../libs/common');
 let router = new Router();
 // 添加token 用的
-// https://www.jianshu.com/p/406301bead0c
 const addtoken = require('../token/addtoken');
 
 router.post('/register', async ctx => {
@@ -37,13 +36,7 @@ router.post('/login', async ctx => {
 // 测试token 的接口 用来查看环境变量
 router.get('/test', async ctx => {
     let data = '测试的啊'
-    ctx.body = {
-        code: 200,
-        data: '测试的啊',
-        msg: ''
-    }
-    // ctx.body = common.handleResulte(200, data, '')
-
+    ctx.body = common.handleResulte(200, data, '')
 })
 
 module.exports = router.routes()

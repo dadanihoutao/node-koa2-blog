@@ -108,7 +108,6 @@ export default {
             let formdata = new FormData()
             formdata.append('file', $file)
             this.imgFile[pos] = $file
-            // 参考博客 https://www.jianshu.com/p/bcf19f69ee4f   以后有时间了要整理下
             let instance = this.$axios.create({
                 withCredentials: true,
                 headers: {

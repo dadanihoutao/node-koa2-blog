@@ -27,7 +27,7 @@ Vue.prototype.$put = put
 Vue.prototype.$Lockr = Lockr
 Vue.prototype.$Bus = new Vue()
 Vue.prototype.$conf = conf
-console.log(conf)
+
 Vue.config.productionTip = false
 
 Vue.use(mavonEditor)

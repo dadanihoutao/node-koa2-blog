@@ -13,9 +13,7 @@ let server = new Koa()
 server.listen(config.port)
 
 // 中间件
-// koa-better-body https://www.jianshu.com/p/694b413ac2a3
 server.use(body({
-    // uploadDir: './static/upload'
     uploadDir: path.resolve(__dirname, './static/upload')
 }))
 
