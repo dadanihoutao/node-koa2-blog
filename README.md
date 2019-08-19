@@ -89,6 +89,10 @@ npm install
 #启动前端项目
 npm run dev
 会自动打开浏览器
+
+# 如果接口报错，有可能是因为设置了webpack 本地服务接口代理
+需要在  /admin/config/proxyConfiy.js 和 /web/config/proxyConfiy.js 
+文件中把代理地址改为自己本地ip地址
 ```
 
 

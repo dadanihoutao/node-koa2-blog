@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@47.111.82.156:/home/git/node-koa2-blog.git"
+    "url": "https://github.com/dadanihoutao/node-koa2-blog.git"
   },
   "keywords": [],
   "author": "",

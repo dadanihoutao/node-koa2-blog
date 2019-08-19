@@ -12,16 +12,29 @@ const common = require('./app/libs/common');
 let server = new Koa()
 server.listen(config.port)
 
-// 中间件
+/**
+ * 中间件 koa-better-body
+ * 相关博客地址  
+ * https://blog.csdn.net/shi851051279/article/details/99618239
+ *  */ 
 server.use(body({
     uploadDir: path.resolve(__dirname, './static/upload')
 }))
 
-// 静态文件托管，上传的图片可以通过路径访问
+/**
+ * koa-static 静态文件托管，上传的图片可以通过路径访问
+ * 相关博客地址
+ * https://blog.csdn.net/shi851051279/article/details/99618426
+ *  */
+// 如下两种写法都可以
 // server.use(static(path.resolve(__dirname, './static/')))
 server.use(static(__dirname + '/static/'))
 
-// 解决跨域
+/**
+ * koa2-cors解决跨域
+ * 相关博客地址
+ * https://blog.csdn.net/shi851051279/article/details/99617908
+ *  */
 server.use(cors({
     origin: function (ctx) {
         return '*'

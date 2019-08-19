@@ -2,12 +2,12 @@ const Router = require('koa-router');
 const common = require('../libs/common');
 
 let router = new Router();
-
+// 文章分类列表
 router.get('/list', async ctx => {
     let data = await ctx.db.query('SELECT c.id, c.name, c.`key`, c.created_at, COUNT(a.category_id) AS category_sum FROM category c LEFT JOIN article a ON c.id = a.category_id GROUP BY c.id ORDER BY c.created_at DESC');
     ctx.body = common.handleResulte(200, data, '获取分类列表成功')
 })
-
+// 添加文章分类
 router.post('/add', async ctx => {
     let { name, key } = ctx.request.fields;
     if (name && key) {
@@ -23,7 +23,7 @@ router.post('/add', async ctx => {
         ctx.body = common.handleResulte(201, '', '分类名称和关键字不能为空')
     }
 })
-
+// 删除文章分类
 router.delete('/del/:id', async ctx => {
     let { id } = ctx.params;
     
@@ -38,7 +38,7 @@ router.get('/detail/:id', async ctx => {
     let data = await ctx.db.query('SELECT id, name, `key` FROM category WHERE id=?', [id])
     ctx.body = common.handleResulte(200, data[0], '详情获取成功')
 })
-
+// 更新文章分类
 router.put('/update/:id', async ctx => {
     let { id } = ctx.params;
     let { key, name } = ctx.request.fields;

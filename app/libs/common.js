@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 module.exports = {
+    // md5 加密方法封装
     md5 (buffer) {
         let obj = crypto.createHash('md5');
         obj.update(buffer);
@@ -18,6 +19,7 @@ module.exports = {
             })
         })
     },
+    // 接口返回数据方法封装
     handleResulte (code, data, msg, page, token) {
         if (page) {
             return { code, data, msg, page }

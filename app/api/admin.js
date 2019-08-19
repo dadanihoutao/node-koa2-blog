@@ -4,6 +4,7 @@ let router = new Router();
 // 添加token 用的
 const addtoken = require('../token/addtoken');
 
+// 注册接口
 router.post('/register', async ctx => {
     let { username, password, email } = ctx.request.fields;
     // 密码加密
@@ -17,6 +18,7 @@ router.post('/register', async ctx => {
     ctx.body = common.handleResulte(200, '', '注册成功')
 })
 
+// 登录接口
 router.post('/login', async ctx => {
     let { email, password } = ctx.request.fields;
     let data = await ctx.db.query(`SELECT * FROM admin`);
@@ -33,7 +35,7 @@ router.post('/login', async ctx => {
     }
 })
 
-// 测试token 的接口 用来查看环境变量
+// 测试接口
 router.get('/test', async ctx => {
     let data = '测试的啊'
     ctx.body = common.handleResulte(200, data, '')
