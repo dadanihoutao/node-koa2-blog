@@ -8,6 +8,10 @@
 - 服务端  Node + Koa2 框架开发的 Restful API
 - 前端 vue 开发的前端和后台管理系统
 
+# 线上地址
+- [前端博客地址](http://www.lokiblog.com)
+- [后台管理地址](http://admin.lokiblog.com)
+
 # 项目包含功能
 
 [koa2](https://www.npmjs.com/package/koa)
@@ -67,7 +71,7 @@ npm install supervisor -g
 #安装node 依赖包
 npm install
 
-#安装成功以后 直接在项目根目录下运行如下命令启动服务
+#安装成功以后 直接在项目根目录下运行如下命令启动服务 /app 目录是接口程序文件 app.js 是后台程序主入口
 npm run dev
 
 #如果数据库连接不上的话可能是账号密码不一样，需要再 /config/config.js 文件中修改数据库配置文件
@@ -89,6 +93,7 @@ npm run dev
 
 
 ### 接口文档还没有写，有时间了会补上
+- 文件中都有注释
 
 有需要的同学可以先拿去学习，如果你还喜欢或者对自己有帮助，欢迎<strong style='color:red;'>star</strong>我。如果你有什么好的建议或者意见，也希望你提  [Issues](https://github.com/dadanihoutao/node-koa2-blog/issues) 告诉我，大家一起讨论交流学习。
 
