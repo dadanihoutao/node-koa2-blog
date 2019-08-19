@@ -98,5 +98,5 @@ npm run dev
 有需要的同学可以先拿去学习，如果你还喜欢或者对自己有帮助，欢迎<strong style='color:red;'>star</strong>我。如果你有什么好的建议或者意见，也希望你提  [Issues](https://github.com/dadanihoutao/node-koa2-blog/issues) 告诉我，大家一起讨论交流学习。
 
 ### 项目参考资料
-- [梁风波博客项目,参考前台后台页面样式布局](https://github.com/liangfengbo/nodejs-koa-blog)
+- [梁风波博客项目,参考前台后台页面样式布局](https://github.com/liangfengbo/nodejs-koa-blog)(这位同学做的比我的要棒，在这里安利一下，我博客的样式布局参照了他的项目，有兴趣的同学可以去看看)
 - [开课吧第六期全栈架构师](https://www.kaikeba.com/vipcourse/web)
