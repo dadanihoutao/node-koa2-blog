@@ -5,8 +5,8 @@ const env = process.env.NODE_ENV;
 
 // 开发环境数据库配置
 const devConfig = {
-    dbName: 'yangblog',
-    dbPass: 'shi19910213',
+    dbName: '',
+    dbPass: '',
     dbHost: 'localhost',
     dbUser: 'root',
     dbPort: 3306,
@@ -15,13 +15,13 @@ const devConfig = {
 }
 // 线上环境数据库配置
 const protConfig = {
-    dbName: 'yangblog',
-    dbPass: 'Test123456!',
+    dbName: '',
+    dbPass: '',
     dbHost: '127.0.0.1',
     dbUser: 'test',
     dbPort: 3306,
     timezone: '08:00',
-    host: 'http://admin.lokiblog.com'
+    host: ''
 }
 
 let config = {}
