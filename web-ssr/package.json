@@ -1,0 +1,30 @@
+{
+  "name": "web-ssr",
+  "version": "1.0.0",
+  "description": "My tiptop Nuxt.js project",
+  "author": "shidongyang",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate",
+    "pm2": "pm2 start npm --name 'web-ssr' -- start"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.9.3",
+    "cross-env": "^5.2.0",
+    "iview": "^3.1.5",
+    "koa": "^2.6.2",
+    "lockr": "^0.8.5",
+    "marked": "^0.8.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "mavon-editor": "^2.7.7",
+    "nodemon": "^1.18.9",
+    "vuescroll": "^4.14.4"
+  }
+}
