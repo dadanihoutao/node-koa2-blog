@@ -48,6 +48,7 @@ export default {
     },
     watch: {},
     async asyncData ({app, query}) {
+        console.log(process.env.NODE_ENV)
         let data2 = await app.$axios.get('/api/category/list')
         return {
             categoryList: data2.data.data || [],
