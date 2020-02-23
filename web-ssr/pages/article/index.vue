@@ -85,6 +85,7 @@ export default {
         }
     },
     async asyncData ({app, query}) {
+        console.log(process.env.NODE_ENV)
         let params = {
             page: 1,
             pageSize: 10,
