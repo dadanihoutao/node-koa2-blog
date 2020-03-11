@@ -9,7 +9,7 @@
 - 前端 vue 开发的前端和后台管理系统
 
 # 线上地址
-- [前端博客地址](http://www.lokiblog.com)
+- [前端博客地址](http://www.lokiblog.com) (当前服务器上是nuxt.js 重构后的服务端渲染版本，如要参考nuxt.js 版本请看页面最底部)
 - [后台管理地址](http://admin.lokiblog.com)
 
 # 项目包含功能
@@ -104,3 +104,9 @@ npm run dev
 ### 项目参考资料
 - [梁风波博客项目,参考前台后台页面样式布局](https://github.com/liangfengbo/nodejs-koa-blog)(这位同学做的比我的要棒，在这里安利一下，我博客的样式布局参照了他的项目，有兴趣的同学可以去看看)
 - [开课吧第六期全栈架构师](https://www.kaikeba.com/vipcourse/web)
+
+
+### 博客前端项目 nuxt.js 服务端渲染已经上线
+- 当前项目的前端项目是第一版（也就是/web文件目录下的代码），因为是采用前端渲染，首次加载还是比较慢，不够流畅，体验也不是很好。正好年前不忙，学了下nuxt.js 重构了前端页面。 现在线上的版本就是使用nuxt.js重构的版本。
+
+- nuxt.js 版前端项目[点击这里跳转](https://github.com/dadanihoutao/web-ssr)
